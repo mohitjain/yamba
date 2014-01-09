@@ -39,7 +39,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 			public void run() {
 				try {
 					Twitter twitter = new Twitter("student", "password");
-					twitter.setAPIRootUrl("http://yamba.markana.com/api");
+					twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 					twitter.setStatus(statusText);
 				} catch (Exception e) {
 					Log.e(TAG, "Died:", e);
