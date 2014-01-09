@@ -2,6 +2,7 @@ package com.example.yamba;
 
 import winterwell.jtwitter.Twitter;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class StatusActivity extends Activity implements OnClickListener {
 	static final String TAG = "Status Activity";
@@ -34,21 +36,37 @@ public class StatusActivity extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View view){
-		final String statusText = editStatus.getText().toString();
-		new Thread() {
-			public void run() {
-				try {
-					Twitter twitter = new Twitter("student", "password");
-					twitter.setAPIRootUrl("http://yamba.marakana.com/api");
-					twitter.setStatus(statusText);
-				} catch (Exception e) {
-					Log.e(TAG, "Died:", e);
-					e.printStackTrace();
-					// TODO: handle exception
-				}
-			}
-		}.start();
+		String statusText = editStatus.getText().toString();
+		new PostToTwitter().execute(statusText);
 		Log.d(TAG, "onClick" + statusText);
+		
+	}
+	
+	class PostToTwitter extends AsyncTask<String, Void, String>{
+
+		@Override
+		protected String doInBackground(String... params) {
+			try {
+				Twitter twitter = new Twitter("student", "password");
+				twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+				twitter.setStatus(params[0]);
+				return "Successfully Posted";
+			} catch (Exception e) { 
+				Log.e(TAG, "Died:", e);
+				e.printStackTrace();
+				return "Posting Failed";
+				// TODO: handle exception
+			}
+			
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			Toast.makeText(StatusActivity.this, result, Toast.LENGTH_LONG).show();
+		}
+			
 		
 	}
 
