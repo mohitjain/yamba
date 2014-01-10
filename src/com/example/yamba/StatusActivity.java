@@ -24,7 +24,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "On Create with Bundle" + savedInstanceState);
-		Debug.startMethodTracing("Yamba.trace");
+		//Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 		updateButton = (Button) findViewById(R.id.button_update);
 		updateButton.setOnClickListener(this);
@@ -57,7 +57,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		Debug.stopMethodTracing();
+		//Debug.stopMethodTracing();
 	}
 
 	public void onClick(View view) {
