@@ -2,10 +2,13 @@ package com.example.yamba;
 
 import winterwell.jtwitter.Twitter;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,9 +24,10 @@ public class StatusActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "On Create with Bundle" + savedInstanceState);
+		Debug.startMethodTracing("Yamba.trace");
 		setContentView(R.layout.status);
 		updateButton = (Button) findViewById(R.id.button_update);
-	    updateButton.setOnClickListener(this);
+		updateButton.setOnClickListener(this);
 
 		editStatus = (EditText) findViewById(R.id.edit_status);
 	}
@@ -35,14 +39,35 @@ public class StatusActivity extends Activity implements OnClickListener {
 		return true;
 	}
 
-	public void onClick(View view){
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent(StatusActivity.this, UpdaterService.class);
+		switch (item.getItemId()) {
+		case R.id.item_start_service:
+			startService(intent);
+			return true;
+		case R.id.item_stop_service:
+			stopService(intent);
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Debug.stopMethodTracing();
+	}
+
+	public void onClick(View view) {
 		String statusText = editStatus.getText().toString();
 		new PostToTwitter().execute(statusText);
 		Log.d(TAG, "onClick" + statusText);
-		
+
 	}
-	
-	class PostToTwitter extends AsyncTask<String, Void, String>{
+
+	class PostToTwitter extends AsyncTask<String, Void, String> {
 
 		@Override
 		protected String doInBackground(String... params) {
@@ -51,24 +76,23 @@ public class StatusActivity extends Activity implements OnClickListener {
 				twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 				twitter.setStatus(params[0]);
 				return "Successfully Posted";
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				Log.e(TAG, "Died:", e);
 				e.printStackTrace();
 				return "Posting Failed";
 				// TODO: handle exception
 			}
-			
+
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			Toast.makeText(StatusActivity.this, result, Toast.LENGTH_LONG).show();
+			Toast.makeText(StatusActivity.this, result, Toast.LENGTH_LONG)
+					.show();
 		}
-			
-		
-	}
 
+	}
 
 }
