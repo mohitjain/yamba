@@ -26,6 +26,7 @@
         </activity>
         
         <service android:name=".UpdaterService"></service>
+        <service android:name=".RefreshService"></service>
     </application>
 
 </manifest>

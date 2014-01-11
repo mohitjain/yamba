@@ -8,5 +8,9 @@
         android:id="@+id/item_stop_service"
         android:title="@string/stop_service">
     </item>
+    <item
+        android:id="@+id/item_refresh_service"
+        android:title="@string/refresh_service">
+    </item>
 
 </menu>
