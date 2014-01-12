@@ -1,6 +1,5 @@
 package com.example.yamba;
 
-import winterwell.jtwitter.Twitter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -76,9 +75,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... params) {
 			try {
-				Twitter twitter = new Twitter("student", "password");
-				twitter.setAPIRootUrl("http://yamba.marakana.com/api");
-				twitter.setStatus(params[0]);
+				((YambaApplication) getApplication()).twitter.setStatus(params[0]);
 				return "Successfully Posted";
 			} catch (Exception e) {
 				Log.e(TAG, "Died:", e);

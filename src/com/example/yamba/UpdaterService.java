@@ -1,8 +1,6 @@
 package com.example.yamba;
 
 import java.util.List;
-
-import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
 import winterwell.jtwitter.TwitterException;
 import android.app.Service;
@@ -14,13 +12,10 @@ public class UpdaterService extends Service {
 	static final String TAG = "Updater Service";
 	static final int DELAY = 30;
 	boolean running = false;
-	Twitter twitter;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		twitter = new Twitter("student", "password");
-		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
 		Log.d(TAG, "onCreate");
 	}
 
@@ -33,7 +28,7 @@ public class UpdaterService extends Service {
 				try {
 					while (running) {
 						Log.d(TAG, "onStartCommandThread");
-						List<Status> timeline = twitter.getPublicTimeline();
+						List<Status> timeline = ((YambaApplication) getApplication()).twitter.getPublicTimeline();
 						for (Status status : timeline) {
 
 							Log.d(TAG, String.format("%s: %s",

@@ -15,5 +15,3 @@ https://www.youtube.com/watch?v=5RHtKIo_KDI&list=SPE08A97D36D5A255F
 ### What are the functionalities in the app that has been covered?
 
 Will update soon…..
-
-
