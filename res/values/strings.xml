@@ -10,5 +10,9 @@
     <string name="start_service">Start Service</string>
     <string name="stop_service">Stop Service</string>
     <string name="refresh_service">Refresh Service</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="server">Server Url</string>
+     <string name="prefs">Preferences</string>
 
 </resources>

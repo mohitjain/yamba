@@ -51,6 +51,9 @@ public class StatusActivity extends Activity implements OnClickListener {
 		case R.id.item_refresh_service:
 			startService(intentRefresh);
 			return true;
+		case R.id.item_prefs_activity:
+			startService(new Intent(StatusActivity.this, PrefsActivity.class));
+			return true;
 		default:
 			return false;
 		}
