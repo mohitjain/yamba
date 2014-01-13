@@ -34,6 +34,7 @@
         </service>
         
         <service android:name=".RefreshService" >
+            
         </service>
     </application>
 
