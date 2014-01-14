@@ -39,7 +39,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intentUpdater = new Intent(this, UpdaterService.class);
+		Intent intentUpdater = new Intent(this, UpdaterService.class); 
 		Intent intentRefresh = new Intent(this, RefreshService.class);
 		switch (item.getItemId()) {
 		case R.id.item_start_service:
