@@ -14,5 +14,6 @@
     <string name="password">Password</string>
     <string name="server">Server Url</string>
      <string name="prefs">Preferences</string>
+     <string name="delay">Delay for the refresh</string>
 
 </resources>

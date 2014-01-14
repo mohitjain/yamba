@@ -10,7 +10,9 @@ import android.util.Log;
 
 public class UpdaterService extends Service {
 	static final String TAG = "Updater Service";
-	static final int DELAY = 30;
+	// this is changed to string cause fucking java typecasting @
+	// Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));
+	static final String DELAY = "30"; //in seconds 
 	boolean running = false;
 
 	@Override
@@ -23,6 +25,8 @@ public class UpdaterService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		running = true;
 		Log.d(TAG, "onStartCommand");
+		//There is a loop hole in the code that whenever delay is changed in prefs you need to restart the service
+		final int delay = Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));
 		new Thread() {
 			public void run() {
 				try {
@@ -34,8 +38,8 @@ public class UpdaterService extends Service {
 							Log.d(TAG, String.format("%s: %s",
 									status.user.name, status.text));
 						}
-
-						Thread.sleep(DELAY * 1000);
+						
+						Thread.sleep(delay * 1000);
 					}
 				} catch (TwitterException e) {
 					Log.e(TAG, "Died:", e);
