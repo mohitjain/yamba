@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <EditTextPreference android:title="@string/username" android:key="username" android:defaultValue="student"/>
-    <EditTextPreference android:title="@string/password" android:key="password" android:password="true" android:defaultValue="password"/>
-    <EditTextPreference android:title="@string/server" android:key="server" android:defaultValue="http://yamba.marakana.com/api"/>
+    <EditTextPreference android:title="@string/username" android:key="username" android:defaultValue="student" android:summary="Please enter your username"/>
+    <EditTextPreference android:title="@string/password" android:key="password" android:password="true" android:defaultValue="password" android:summary="Please enter your password"/>
+    <EditTextPreference android:title="@string/server" android:key="server" android:defaultValue="http://yamba.marakana.com/api" android:summary="Please enter the server root url"/>
     
 
 </PreferenceScreen>

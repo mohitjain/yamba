@@ -23,6 +23,9 @@ public class YambaApplication extends Application implements OnSharedPreferenceC
 	
 	public Twitter getTwitter()
 	{
+		// We are setting it to null when preferences are changed. 
+		// the reason is when this will reset to null. Getter will read from the shared prefrences again. else it will keep passing the same 
+		// variable whenever this getter will be called.
 		if(twitter == null)
 		{
 			String username = prefs.getString("username", "");
@@ -38,6 +41,9 @@ public class YambaApplication extends Application implements OnSharedPreferenceC
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
+		// We are setting it to null when preferences are changed. 
+		// the reason is when this will reset to null. Getter will read from the shared prefrences again. else it will keep passing the same 
+		// variable whenever this getter will be called.
 		twitter = null;		
 	}
 
