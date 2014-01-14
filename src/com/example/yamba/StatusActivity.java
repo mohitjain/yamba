@@ -78,7 +78,7 @@ public class StatusActivity extends Activity implements OnClickListener {
 		@Override
 		protected String doInBackground(String... params) {
 			try {
-				((YambaApplication) getApplication()).twitter.setStatus(params[0]);
+				((YambaApplication) getApplication()).getTwitter().setStatus(params[0]);
 				return "Successfully Posted";
 			} catch (Exception e) {
 				Log.e(TAG, "Died:", e);
