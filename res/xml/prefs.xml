@@ -3,7 +3,7 @@
     <EditTextPreference android:title="@string/username" android:key="username" android:defaultValue="student" android:summary="Please enter your username"/>
     <EditTextPreference android:title="@string/password" android:key="password" android:password="true" android:defaultValue="password" android:summary="Please enter your password"/>
     <EditTextPreference android:title="@string/server" android:key="server" android:defaultValue="http://yamba.marakana.com/api" android:summary="Please enter the server root url"/>
-    <EditTextPreference android:key="delay" android:title="@string/delay" android:summary="How frequently you want to update the tweets (in seconds)" android:inputType="number" />
+    <ListPreference android:key="delay" android:summary="Please select the time duration for update (default is 30 seconds)" android:title="@string/delay" android:entries="@array/delay_names" android:entryValues="@array/delay_values"/>
     
 
 </PreferenceScreen>
