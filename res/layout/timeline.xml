@@ -11,7 +11,13 @@
         android:text="@string/timeline"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ScrollView
+    
+    <ListView    android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></ListView>
+    
+    
+  <!--   <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
         <TextView
@@ -20,5 +26,5 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     </ScrollView>
-
+ -->
 </LinearLayout>
