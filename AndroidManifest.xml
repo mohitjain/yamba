@@ -29,7 +29,8 @@
         </activity>
         <activity android:name=".PrefsActivity" >
         </activity>
-
+        <activity android:name=".TimelineActivity" >
+        </activity>
         <service android:name=".UpdaterService" >
         </service>
         <service android:name=".RefreshService" >

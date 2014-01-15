@@ -15,7 +15,7 @@
     <string name="server">Server Url</string>
     <string name="prefs">Preferences</string>
     <string name="delay">Delay for the refresh</string>
-
+	<string name="timeline">TimeLine</string>
     <string-array name="delay_names">
         <item>Every Minute</item>
         <item>Every 5 minutes</item>
