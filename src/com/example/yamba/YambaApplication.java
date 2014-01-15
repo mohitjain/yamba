@@ -11,6 +11,7 @@ public class YambaApplication extends Application implements OnSharedPreferenceC
 	static final String TAG = "YambaApplication";
 	private Twitter twitter;
 	SharedPreferences prefs;
+	StatusData statusData;
 	
 	@Override
 	public void onCreate() {
@@ -18,6 +19,7 @@ public class YambaApplication extends Application implements OnSharedPreferenceC
 		super.onCreate();		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
+		statusData = new StatusData(this);
 		Log.d(TAG, "onCreate"); 
 	}
 	

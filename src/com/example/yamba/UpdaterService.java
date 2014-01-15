@@ -25,18 +25,22 @@ public class UpdaterService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		running = true;
 		Log.d(TAG, "onStartCommand");
-		//There is a loop hole in the code that whenever delay is changed in prefs you need to restart the service
-		final int delay = Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));
 		new Thread() {
 			public void run() {
 				try {
 					while (running) {
 						Log.d(TAG, "onStartCommandThread");
+						
 						List<Status> timeline = ((YambaApplication) getApplication()).getTwitter().getPublicTimeline();
+						StatusData statusData = ((YambaApplication)getApplication()).statusData;
+						//There is a loop hole in the code that whenever delay is changed in prefs you need to restart the service
+						final int delay = Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));
+						
 						for (Status status : timeline) {
 
 							Log.d(TAG, String.format("%s: %s",
 									status.user.name, status.text));
+							statusData.insert(status);
 						}
 						
 						Thread.sleep(delay * 1000);
