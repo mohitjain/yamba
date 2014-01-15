@@ -1,19 +1,20 @@
 package com.example.yamba;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends ListActivity {
 	static final String[] FROM  = {StatusData.C_USER, StatusData.C_TEXT, StatusData.C_CREATED_AT };
     static final int[] TO = { R.id.text_user, R.id.text_text,  R.id.text_created_at };
-	ListView list;
 	Cursor cursor;
 	SimpleCursorAdapter adapter;
 	@SuppressWarnings("deprecation")
@@ -21,8 +22,6 @@ public class TimelineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.timeline);
-		list = (ListView) findViewById(R.id.list);
 		cursor = ((YambaApplication)getApplication()).statusData.query();
 		
 //		while(cursor.moveToNext()){
@@ -30,12 +29,47 @@ public class TimelineActivity extends Activity {
 //			String status_text = cursor.getString(cursor.getColumnIndex(StatusData.C_TEXT)); 		
 //			textOut.append(String.format("\n%s %s", user_name, status_text));
 //		}
-		
 		adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, FROM, TO); 
 		adapter.setViewBinder(VIEW_BINDER);
-		list.setAdapter(adapter);
+		setTitle(R.string.timeline);
+		getListView().setAdapter(adapter);
 		
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.status, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intentUpdater = new Intent(this, UpdaterService.class); 
+		Intent intentRefresh = new Intent(this, RefreshService.class);
+		switch (item.getItemId()) {
+		case R.id.item_start_service:
+			startService(intentUpdater);
+			return true;
+		case R.id.item_stop_service:
+			stopService(intentUpdater);
+			return true;
+		case R.id.item_refresh_service:
+			startService(intentRefresh);
+			return true;
+		case R.id.item_prefs_activity:
+			startActivity(new Intent(this, PrefsActivity.class));
+			return true;
+		case R.id.item_timeline:
+			startActivity(new Intent(this, TimelineActivity.class));
+		case R.id.item_new_status:
+			startActivity(new Intent(this, StatusActivity.class));			
+			
+		default:
+			return false;
+		}
+	}
+
 	
 	static final ViewBinder VIEW_BINDER = new ViewBinder(){
 

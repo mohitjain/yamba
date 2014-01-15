@@ -16,6 +16,7 @@
     <string name="prefs">Preferences</string>
     <string name="delay">Delay for the refresh</string>
 	<string name="timeline">TimeLine</string>
+	<string name="new_status">New Status</string>
     <string-array name="delay_names">
         <item>Every Minute</item>
         <item>Every 5 minutes</item>
