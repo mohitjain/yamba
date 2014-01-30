@@ -1,8 +1,5 @@
 package com.example.yamba;
-import java.util.List;
 
-import winterwell.jtwitter.Twitter.Status;
-import winterwell.jtwitter.TwitterException;
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
@@ -18,19 +15,7 @@ public class RefreshService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.d(TAG, "onHandleIntent");
-		StatusData statusData = ((YambaApplication)getApplication()).statusData;
-		try {
-			List<Status> timeline = ((YambaApplication)getApplication()).getTwitter().getPublicTimeline();
-			for (Status status : timeline) {
-				Log.d(TAG,
-						String.format("%s: %s", status.user.name, status.text));
-				statusData.insert(status);
-			}
-		} catch (TwitterException e) {
-			Log.e(TAG, "Died:", e);
-			e.printStackTrace();
-		}
-
+		((YambaApplication) getApplication()).pullAndInsert();
 	}
 
 	@Override

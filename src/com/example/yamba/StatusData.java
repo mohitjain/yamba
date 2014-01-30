@@ -48,6 +48,7 @@ public class StatusData {
 		 return cursor; 
 	 }
 	 
+	
 	  
 	  public class DbHelper extends SQLiteOpenHelper {
 

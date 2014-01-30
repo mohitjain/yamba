@@ -1,8 +1,5 @@
 package com.example.yamba;
 
-import java.util.List;
-import winterwell.jtwitter.Twitter.Status;
-import winterwell.jtwitter.TwitterException;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -31,23 +28,12 @@ public class UpdaterService extends Service {
 					while (running) {
 						Log.d(TAG, "onStartCommandThread");
 						
-						List<Status> timeline = ((YambaApplication) getApplication()).getTwitter().getPublicTimeline();
-						StatusData statusData = ((YambaApplication)getApplication()).statusData;
+						((YambaApplication) getApplication()).pullAndInsert();
+						
 						//There is a loop hole in the code that whenever delay is changed in prefs you need to restart the service
-						final int delay = Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));
-						
-						for (Status status : timeline) {
-
-							Log.d(TAG, String.format("%s: %s",
-									status.user.name, status.text));
-							statusData.insert(status);
-						}
-						
+						final int delay = Integer.parseInt(((YambaApplication) getApplication()).prefs.getString("delay", DELAY));						
 						Thread.sleep(delay * 1000);
 					}
-				} catch (TwitterException e) {
-					Log.e(TAG, "Died:", e);
-					e.printStackTrace();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

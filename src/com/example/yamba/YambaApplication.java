@@ -1,7 +1,12 @@
 package com.example.yamba;
 
+import java.util.List;
+
 import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.TwitterException;
+import winterwell.jtwitter.Twitter.Status;
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
@@ -9,6 +14,7 @@ import android.util.Log;
 
 public class YambaApplication extends Application implements OnSharedPreferenceChangeListener {
 	static final String TAG = "YambaApplication";
+	public static final String ACTION_NEW_STATUS = "com.example.yamba.NEW_STATUS";
 	private Twitter twitter;
 	SharedPreferences prefs;
 	StatusData statusData;
@@ -48,6 +54,34 @@ public class YambaApplication extends Application implements OnSharedPreferenceC
 		// variable whenever this getter will be called.
 		twitter = null;		
 	}
+	
+	long lastTimeStampSeen = -1;
+	 public int pullAndInsert(){
+		 int count = 0;
+			try {
+				List<Status> timeline = getTwitter().getPublicTimeline();
+				for (Status status : timeline) {
+					Log.d(TAG,
+							String.format("%s: %s", status.user.name, status.text));
+					statusData.insert(status);
+					if(status.createdAt.getTime() > lastTimeStampSeen)
+					{
+						lastTimeStampSeen = status.createdAt.getTime();
+						count++;
+						
+					}
+				}
+			} catch (TwitterException e) {
+				Log.e(TAG, "Died:", e);
+				e.printStackTrace();
+			}
+			if(count > 0)
+			{
+				sendBroadcast(new Intent(ACTION_NEW_STATUS).putExtra("count", count));
+			}
+		return count;	
+	 }
+	 
 
 	
 }

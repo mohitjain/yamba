@@ -1,10 +1,14 @@
 package com.example.yamba;
 
 import android.app.ListActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +17,12 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 public class TimelineActivity extends ListActivity {
+
+	static final String TAG = "TimelineActivity";
 	static final String[] FROM  = {StatusData.C_USER, StatusData.C_TEXT, StatusData.C_CREATED_AT };
     static final int[] TO = { R.id.text_user, R.id.text_text,  R.id.text_created_at };
 	Cursor cursor;
+	TimelineReceiver receiver;
 	SimpleCursorAdapter adapter;
 	@SuppressWarnings("deprecation")
 	@Override
@@ -60,8 +67,6 @@ public class TimelineActivity extends ListActivity {
 		case R.id.item_prefs_activity:
 			startActivity(new Intent(this, PrefsActivity.class));
 			return true;
-		case R.id.item_timeline:
-			startActivity(new Intent(this, TimelineActivity.class));
 		case R.id.item_new_status:
 			startActivity(new Intent(this, StatusActivity.class));			
 			
@@ -69,6 +74,20 @@ public class TimelineActivity extends ListActivity {
 			return false;
 		}
 	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(receiver);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(receiver == null) receiver = new TimelineReceiver();
+		registerReceiver(receiver, new IntentFilter(YambaApplication.ACTION_NEW_STATUS));
+	}
+
 
 	
 	static final ViewBinder VIEW_BINDER = new ViewBinder(){
@@ -84,7 +103,20 @@ public class TimelineActivity extends ListActivity {
 		}
 		
 	}; 
+	
+	class TimelineReceiver extends BroadcastReceiver
+	{
 
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			cursor = ((YambaApplication)getApplication()).statusData.query();
+			adapter.changeCursor(cursor);
+			Log.d(TAG, "onReceive in TimelineReceiver with new tweets count " + intent.getIntExtra("count", 0 ));
+			
+		}
+		
+	}
 	  
 }
  
