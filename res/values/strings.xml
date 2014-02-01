@@ -15,18 +15,24 @@
     <string name="server">Server Url</string>
     <string name="prefs">Preferences</string>
     <string name="delay">Delay for the refresh</string>
-	<string name="timeline">TimeLine</string>
-	<string name="new_status">New Status</string>
-    <string-array name="delay_names">
-        <item>Every Minute</item>
-        <item>Every 5 minutes</item>
-        <item>Every half hour</item>
-    </string-array>
+    <string name="timeline">TimeLine</string>
+    <string name="new_status">New Status</string>
 
+    <string-array name="delay_names">
+        <item>Every 30 Seconds</item>
+        <item>Every 15 Minutes</item>
+        <item>Every half hour</item>
+        <item>Every hour</item>
+        <item>Every Half Day</item>
+        <item>Once a Day</item>
+    </string-array>
     <string-array name="delay_values">
-        <item>60</item>
-        <item>300</item>
-        <item>9000</item>
+        <item>30000</item>
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>43200000</item>
+        <item>86400000</item>
     </string-array>
 
 </resources>

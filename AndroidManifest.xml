@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <permission
+        android:name="com.example.yamba.permission.REFRESH"
+        android:protectionLevel="signature" >
+    </permission>
+
     <application
         android:name=".YambaApplication"
         android:allowBackup="true"
@@ -27,19 +32,37 @@
         <activity android:name=".TimelineActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".UpdaterService" >
         </service>
-        <service android:name=".RefreshService" >
+ 
+        
+        
+        <service
+            android:name=".RefreshService"
+            android:permission="com.example.yamba.permission.REFRESH" >
+            <intent-filter>
+                <action android:name="com.example.yamba.RefreshService" />
+            </intent-filter>
         </service>
 
-        <receiver android:name=".BootReceiver" >
+        
+        
+        <receiver android:name=".BootReceiver" 
+             android:permission="com.example.yamba.permission.REFRESH" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.example.yamba.RefreshAlarm" />
             </intent-filter>
         </receiver>
+        
+        
+        
+        
     </application>
 
 </manifest>
