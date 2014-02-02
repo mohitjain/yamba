@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class BootReceiver extends BroadcastReceiver {
+public class RefreshScheduleReceiver extends BroadcastReceiver {
 	static final String TAG = "BootReceiver";
 	static PendingIntent lastOperation;
 
